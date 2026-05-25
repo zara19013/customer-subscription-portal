@@ -1,26 +1,139 @@
 @import "tailwindcss";
 
+@custom-variant xs (@media (min-width: 480px));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Nav / brand shell — deep forest green ── */
+  --navy:      #1b3d2f;
+  --navy-2:    #254f3c;
+  --navy-3:    #336150;
+
+  /* ── Primary accent — rich forest green ── */
+  --green:     #2d6a4f;
+  --green-bg:  #edf7f1;
+  --green-rim: #95c9ab;
+
+  /* ── Gold — Resilia signature ── */
+  --gold:      #c4a256;
+  --gold-bg:   #faf4e4;
+  --gold-rim:  #d9bc7a;
+
+  /* ── Coral — alerts / cancel ── */
+  --red:       #c45a3c;
+  --red-bg:    #fdf0ec;
+  --red-rim:   #e09a7f;
+
+  /* ── Sage — secondary accent (charts, active states) ── */
+  --violet:    #52796f;
+  --violet-bg: #eef4f2;
+
+  /* ── Page surfaces — warm cream ── */
+  --bg:        #f7f7f2;
+  --surface:   #ffffff;
+  --subtle:    #f3f4ee;
+  --border:    #e2e3db;
+
+  /* ── Text — warm-toned neutrals ── */
+  --ink:       #1c1c18;
+  --ink-2:     #3c3c34;
+  --ink-3:     #68685c;
+  --ink-4:     #96968a;
+  --ink-5:     #c8c8c0;
+
+  /* ── Elevation ── */
+  --shadow:    0 1px 4px rgba(27,61,47,.07), 0 2px 6px rgba(27,61,47,.04);
+  --shadow-md: 0 4px 16px rgba(27,61,47,.10);
+  --shadow-lg: 0 12px 36px rgba(27,61,47,.13);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm-sans), 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Serif utility for Playfair Display */
+.serif {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+/* Uppercase tracking label */
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 4px; }
+
+/* Range */
+input[type=range] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px; border-radius: 2px;
+  background: var(--border); cursor: pointer; outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--green); cursor: pointer;
+  border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+
+*:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+::selection { background: var(--green-bg); color: var(--navy); }
+
+/* Smooth interactive transitions */
+button, a { transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease; }
+
+/* Sidebar — show only on desktop (bypasses Tailwind v4 cascade ordering) */
+.sidebar {
+  display: none;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+@media (min-width: 768px) {
+  .sidebar { display: flex; }
+}
+
+/* Dashboard mobile tabs — hide on desktop */
+.dash-mobile-tabs { display: flex; overflow-x: auto; scrollbar-width: none; }
+.dash-mobile-tabs::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) { .dash-mobile-tabs { display: none; } }
+
+/* Nav responsive — bypasses Tailwind v4 */
+.nav-links       { display: none; flex-direction: row; align-items: center; gap: 2px; }
+.nav-sep         { display: none; }
+.nav-pts         { display: none; align-items: center; }
+.nav-email       { display: none; }
+.nav-signout     { display: none; align-items: center; }
+.nav-mobile-bar  { display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; }
+
+@media (min-width: 640px) {
+  .nav-pts   { display: flex; }
+  .nav-email { display: block; }
+}
+@media (min-width: 768px) {
+  .nav-links      { display: flex; }
+  .nav-sep        { display: block; }
+  .nav-signout    { display: flex; }
+  .nav-mobile-bar { display: none; }
 }
